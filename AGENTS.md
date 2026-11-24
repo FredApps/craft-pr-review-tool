@@ -72,7 +72,7 @@ Craft PR Review: a maintainer tool, not a Craft app, that lists and grades the C
 - Mirrored types change together: `ui/src/model.ts` with `pr_core::views` and `poller::Status`. The status truth table has three copies: `assess::headline`, `STATUS_HELP` in `ui/src/model.ts` and the README.
 - PR text is untrusted: it reaches the DOM only as text nodes, links leave only through `open_url` (GitHub only), and the Claude CLI runs with no tools, MCP servers or settings (`pr_claude::cli_args`). Claude's opinion can only mark a PR harder or interesting; the status and quality from `pr_core::assess` never depend on it.
 - GitHub quota is shared with Craft Status (one account, 5000 GraphQL points an hour): hold `SharedCache::try_lease` around anything that talks to GitHub and don't fetch what `PrLedger` already holds. This app gives way: its `budget_floor` is far above Craft Status's, and it never waits on the lease.
-- Tests: Rust beside the code; UI logic in `ui/src/model.ts` with `model.test.ts`; DOM behaviour in `app.test.ts` (happy-dom, fake host API).
+- New code gets tests: Rust beside the code; UI logic in `ui/src/model.ts` with `model.test.ts`; DOM behaviour in `app.test.ts` (happy-dom, fake host API).
 - Checks: `make check` (clippy, rustfmt, typecheck) and `make test` (Rust and UI tests). `make run` starts a debug build; `make install` puts the release app in /Applications and starts it at login; `make preview` shows the UI against what is cached (`make dump`).
 - `unsafe`: only in `crates/craft-pr-review/src/shrink.rs`, the macOS AppKit and WindowServer calls that detect the half-size window glitch.
 - More: [README.md](README.md).
